@@ -12,9 +12,9 @@
 (display-line-numbers-mode 1)
 (setq display-line-numbers 'relative)
 
-(set-frame-font "Inconsolata 18")
+(set-frame-font "Inconsolata 14")
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata 18"))
+             '(font . "Inconsolata 14"))
 
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
