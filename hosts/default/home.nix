@@ -22,15 +22,19 @@
   imports = 
    [ 
      #inputs.xremap-flake.homeManagerModules.default
+     #./alacritty.nix
    ];
 
-
+  
   #programs.nixvim.enable = true;
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
+    traceroute
+    irssi
+    killall
     hello
     alacritty
     chromium
@@ -48,7 +52,10 @@
     gping
     hyperfine
     duf
-    neovim  
+    neovim
+    git
+    ripgrep
+    fd
     emacs29
     hyfetch
     tldr   
@@ -62,6 +69,8 @@
     wev
     rustc
     cargo
+    distrobox
+    docker
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -77,6 +86,19 @@
   ];
 
 
+  programs.git = {
+    enable = true;
+    userName = "naidneelttil";
+    userEmail = "naidneelttil@protonmail.com";
+
+    aliases = {
+      pu = "push";
+      co = "checkout";
+      cm = "commit";
+
+    };
+  };
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -84,7 +106,6 @@
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
-
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose

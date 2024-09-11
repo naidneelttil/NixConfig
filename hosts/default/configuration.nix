@@ -10,7 +10,6 @@
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
       inputs.xremap-flake.nixosModules.default
-      #inputs.nixvim.nixosModules.nixvim
     ];
 
   # Bootloader.
@@ -51,7 +50,7 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-
+  #services.xserver.windowManager.hypr.enable = true;
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -91,6 +90,8 @@
             CONTROL_R: ALT_R
     '';
   };
+
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -119,7 +120,7 @@ programs.nix-ld = {
   enable = true;
   libraries = pkgs.steam-run.fhsenv.args.multiPkgs pkgs; 
 }; 
-
+programs.nix-ld.package = pkgs.nix-ld-rs;
 
   # Install firefox.
   #programs.firefox.enable = true;
@@ -131,11 +132,18 @@ programs.nix-ld = {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+
+  virtualisation.podman.enable = true;
+  virtualisation.containers.enable = true;
+
   environment.systemPackages = with pkgs; [ 
   # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+  distrobox
+  steam-run
   (lib.hiPrio (writeShellScriptBin "python3" ''LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH exec -a $0 ${python3}/bin/python3 "$@"''))
-
+  rust-analyzer
+   openvpn  
   ];
 
   #use xremap
