@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
-      inputs.xremap-flake.nixosModules.default
+#      inputs.xremap-flake.nixosModules.default
     ];
 
   # Bootloader.
@@ -75,21 +75,21 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-  services.xremap = {
-    userName = "naidneelttil";
-    watch = true;
-    yamlConfig = ''
-      modmap:
-        - name: Global
-          remap:
-            Esc: CapsLock
-            CapsLock: Esc
-            ALT_L: CONTROL_L
-            CONTROL_L: ALT_L
-            ALT_R: CONTROL_R
-            CONTROL_R: ALT_R
-    '';
-  };
+ # services.xremap = {
+ #   userName = "naidneelttil";
+ #   watch = true;
+ #   yamlConfig = ''
+ #     modmap:
+ #       - name: Global
+ #         remap:
+ #           Esc: CapsLock
+ #           CapsLock: Esc
+ #           ALT_L: CONTROL_L
+#            CONTROL_L: ALT_L
+#            ALT_R: CONTROL_R
+#            CONTROL_R: ALT_R
+#    '';
+#  };
 
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -139,12 +139,71 @@ programs.nix-ld.package = pkgs.nix-ld-rs;
   environment.systemPackages = with pkgs; [ 
   # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+  ghidra
   distrobox
   steam-run
   (lib.hiPrio (writeShellScriptBin "python3" ''LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH exec -a $0 ${python3}/bin/python3 "$@"''))
   rust-analyzer
-   openvpn  
+   openvpn
+   kanata
+   binutils
+   gnumake
+
+    (python311.withPackages (ps: with ps; [
+      #stem # tor
+      angr
+      pillow
+      pip
+      numpy
+      scipy
+      flake8
+      pytest
+      coverage
+      cython
+      wheel
+      jupyterlab
+      #tensorflow
+       pandas
+      statsmodels
+      matplotlib
+      pytorch
+      fastai
+      #openai
+      ipython
+      scikitlearn
+      sympy 
+    ]))  
   ];
+
+
+  services.kanata.enable = true;
+  services.kanata.keyboards.box = {
+    config = ''
+
+
+(defsrc
+  esc
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lctl lmet lalt           spc            ralt rmet rctl
+)
+
+
+(deflayer default
+  caps
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+  esc  a    s    d    f    g    h    j    k    l    ;    '    ret
+  lsft z    x    c    v    b    n    m    ,    .    /    rsft
+  lalt lmet lctl           spc            rctl rmet alt
+)
+
+
+    '';
+    devices = [];
+  };
 
   #use xremap
  # hardware.uinput.enable = true;
@@ -178,4 +237,8 @@ programs.nix-ld.package = pkgs.nix-ld-rs;
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 
+  hardware.graphics.extraPackages = with pkgs; [
+
+    rocmPackages.clr.icd
+  ];
 }

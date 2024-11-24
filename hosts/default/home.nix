@@ -32,6 +32,13 @@
   home.packages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
+    mediawriter
+    vscode
+    wireshark
+    john
+    p7zip
+    unzip
+    hashcat
     traceroute
     irssi
     killall
@@ -98,7 +105,43 @@
 
     };
   };
-
+  # run the emacs server daemon so starting emacs (as a client) is super fast:
+  services.emacs.enable = true;
+  # services.emacs.package = pkgs.emacs29-pgtk; # alpha-background, finally
+  services.emacs.package = (with pkgs; (
+    (emacsPackagesFor emacs29-pgtk).emacsWithPackages (epkgs: with epkgs; [
+        evil
+        ess
+        projectile
+        neotree
+        ob-rust
+        ob-elm
+        company
+        # company-stan
+        company-math
+        company-jedi
+        company-ghci
+        company-org-block
+        company-c-headers
+        company-nixos-options
+        company-native-complete
+        helm
+        flycheck
+        magit
+        lsp-mode
+        evil-markdown
+        htmlize
+        ox-reveal
+        zotero
+        fira-code-mode
+        doom-themes
+        doom-modeline
+        adwaita-dark-theme
+        gnuplot
+        gnuplot-mode
+      ]
+    )
+  ));
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
