@@ -17,6 +17,9 @@
   networking.hostName = "Athena"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  # here make usbs work
+  services.udisks2.enable = true;
+  services.gvfs.enable = true;
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -87,8 +90,17 @@ networking.firewall.allowedTCPPortRanges = [ { from = 51000; to = 51999; } ];
 
 
   # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+	#services.displayManager.gdm.enable = true;
+	#services.desktopManager.gnome.enable = true;
+
+# all the kewl kids use niri now ig
+	programs.niri.enable = true;
+
+security.polkit.enable = true; # polkit
+services.gnome.gnome-keyring.enable = true; # secret service
+security.pam.services.swaylock = {};
+
+programs.waybar.enable = true; # top bar
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -153,9 +165,28 @@ services.ollama = {
   loadModels = [ "llama3.2:3b" "deepseek-r1:1.5b"];
 };
 
+  hardware.bluetooth = {
+	enable = true;
+	package =pkgs.bluez;
+
+	};
   environment.systemPackages = with pkgs; [
+  rustscan 
+  mediawriter
+  libreoffice
+  xwayland-satellite
+  wireguard-tools
+  iproute2
+  fuzzel 
+  swaylock 
+  mako
+  swaybg
+  swayidle 
    awscli2
+  nautilus
+  nerd-fonts.adwaita-mono
    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+   jdk
    vlc
    nethack
    ghidra
@@ -197,6 +228,7 @@ services.ollama = {
    zellij
    ngrok
    openvpn
+   heroic 
    tldr
     (python312.withPackages (ps: with ps; [
       pip
@@ -213,6 +245,11 @@ services.ollama = {
       ]))  
 
   ];
+
+ environment.sessionVariables = {
+    EDITOR = "nvim";
+    _JAVA_AWT_WM_NONREPARENTING=1;
+  };
 # Make normal binaries work
 programs.nix-ld = {
   enable = true;
