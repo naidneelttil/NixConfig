@@ -95,7 +95,6 @@ networking.firewall.allowedTCPPortRanges = [ { from = 51000; to = 51999; } ];
 
 # all the kewl kids use niri now ig
 	programs.niri.enable = true;
-
 security.polkit.enable = true; # polkit
 services.gnome.gnome-keyring.enable = true; # secret service
 security.pam.services.swaylock = {};
@@ -162,7 +161,7 @@ programs.waybar.enable = true; # top bar
 services.ollama = {
   enable = true;
   # Optional: preload models, see https://ollama.com/library
-  loadModels = [ "llama3.2:3b" "deepseek-r1:1.5b"];
+  loadModels = [ "gpt-oss" "qwen3.5" "kimi-k2.5"];
 };
 
   hardware.bluetooth = {
@@ -171,6 +170,7 @@ services.ollama = {
 
 	};
   environment.systemPackages = with pkgs; [
+  brightnessctl
   rustscan 
   mediawriter
   libreoffice
@@ -206,7 +206,7 @@ services.ollama = {
    zip
    unzip
    vscode
-   chromium
+   ungoogled-chromium
    qemu
    nerd-fonts.symbols-only
    nerd-fonts.fira-code
@@ -230,6 +230,7 @@ services.ollama = {
    openvpn
    heroic 
    tldr
+   element-desktop
     (python312.withPackages (ps: with ps; [
       pip
       numpy
@@ -237,13 +238,10 @@ services.ollama = {
       beautifulsoup4
       lxml
       pwntools
-       #tensorflow
        pandas
-      # py-cord
-      # discordpy
        python-dotenv
       ]))  
-
+     
   ];
 
  environment.sessionVariables = {
