@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   imports =
@@ -160,8 +160,9 @@ programs.waybar.enable = true; # top bar
   #install ollama as a systemd service
 services.ollama = {
   enable = true;
+  package = pkgs-unstable.ollama;
   # Optional: preload models, see https://ollama.com/library
-  loadModels = [ "gpt-oss" "qwen3.5" "kimi-k2.5"];
+  loadModels = [ "gpt-oss"];
 };
 
   hardware.bluetooth = {
@@ -195,6 +196,7 @@ services.ollama = {
    git
    file
    tmux
+   ghostty
    burpsuite
    wireshark
    wget  
@@ -229,8 +231,10 @@ services.ollama = {
    ngrok
    openvpn
    heroic 
+   wiremix
    tldr
    element-desktop
+   obs-studio
     (python312.withPackages (ps: with ps; [
       pip
       numpy
@@ -239,7 +243,7 @@ services.ollama = {
       lxml
       pwntools
        pandas
-       python-dotenv
+			#python-dotenv
       ]))  
      
   ];
