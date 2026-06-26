@@ -170,7 +170,9 @@ services.ollama = {
 	package =pkgs.bluez;
 
 	};
+
   environment.systemPackages = with pkgs; [
+  pkgs-unstable.pi-coding-agent
   brightnessctl
   rustscan 
   mediawriter
@@ -235,6 +237,13 @@ services.ollama = {
    tldr
    element-desktop
    obs-studio
+    
+    #libreoffice and dictionaries 
+    libreoffice
+    hunspell
+    hunspellDicts.en_US
+    hunspellDicts.en_GB-ise
+
     (python312.withPackages (ps: with ps; [
       pip
       numpy
@@ -244,7 +253,7 @@ services.ollama = {
       pwntools
        pandas
 			#python-dotenv
-      ]))  
+      ] ))  
      
   ];
 
