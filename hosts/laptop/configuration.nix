@@ -171,6 +171,9 @@ services.ollama = {
 
 	};
 
+ #this is to get by the sphinx python3 docs issue.
+  documentation.doc.enable = false;
+
   environment.systemPackages = with pkgs; [
   pkgs-unstable.pi-coding-agent
   brightnessctl
