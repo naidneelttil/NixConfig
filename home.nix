@@ -4,7 +4,7 @@
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "naidneelttil";
-  home.homeDirectory = "/var/home/naidneelttil";
+  home.homeDirectory = "/home/naidneelttil";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -21,6 +21,7 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     hello
+    pciutils
     nethack
     gh
     fastfetch
@@ -83,6 +84,13 @@
   #
   #  /etc/profiles/per-user/naidneelttil/etc/profile.d/hm-session-vars.sh
   #
+  programs.git = {
+    enable = true;
+    settings.user.name = "naidneelttil";
+    settings.user.email = "naidneelttil@protonmail.com";
+
+  };
+
   home.sessionVariables = {
     EDITOR = "vim";
   };
