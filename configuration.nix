@@ -173,6 +173,7 @@ services.ollama = {
 
   environment.systemPackages = with pkgs; [
   pkgs-unstable.pi-coding-agent
+  ffmpg
   brightnessctl
   rustscan 
   mediawriter

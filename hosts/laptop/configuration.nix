@@ -141,6 +141,12 @@ programs.waybar.enable = true; # top bar
 
   # Install firefox.
   programs.firefox.enable = true;
+  # get captive-browser
+
+programs.captive-browser = {
+  enable = true;
+  interface = "wlp2s0"; # Replace "wlan0" with your actual interface name
+};
 
   # allow flatpak
   services.flatpak.enable = true; 
@@ -163,6 +169,10 @@ services.ollama = {
   package = pkgs-unstable.ollama;
   # Optional: preload models, see https://ollama.com/library
   loadModels = [ "gpt-oss"];
+  # bigger context so pi's system prompt + tool defs aren't truncated
+  environmentVariables = {
+    OLLAMA_CONTEXT_LENGTH = "32768";
+  };
 };
 
   hardware.bluetooth = {
@@ -176,6 +186,9 @@ services.ollama = {
 
   environment.systemPackages = with pkgs; [
   pkgs-unstable.pi-coding-agent
+  ffmpeg 
+  kdePackages.kdenlive
+  audacity
   brightnessctl
   rustscan 
   mediawriter

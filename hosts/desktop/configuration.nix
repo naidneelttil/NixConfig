@@ -172,6 +172,10 @@ services.ollama = {
   package = pkgs-unstable.ollama-rocm;
   # Optional: preload models, see https://ollama.com/library
   loadModels = [ "gemma4"];
+  # bigger context so pi's system prompt + tool defs aren't truncated
+  environmentVariables = {
+    OLLAMA_CONTEXT_LENGTH = "32768";
+  };
 };
 
   hardware.bluetooth = {

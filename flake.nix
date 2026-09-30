@@ -23,7 +23,11 @@
       specialArgs = { inherit inputs pkgs-unstable; };
       modules = [
         ./hosts/laptop/configuration.nix
-         inputs.home-manager.nixosModules.default
+        inputs.home-manager.nixosModules.default {
+           home-manager.users.naidneelttil = import ./home.nix;
+	}
+
+
       ];
     };
 
